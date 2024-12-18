@@ -1,102 +1,36 @@
-import {makeAutoObservable, runInAction} from "mobx";
-import axios, { AxiosResponse } from "axios";
+import { makeAutoObservable } from "mobx";
+import { Task } from "../interfaces/Task";
 
-interface Task {
-    id: number;
-    title: string;
-    completed: boolean;
-}
-
-class TasksStore {
+export default class TasksStore {
     tasks: Task[] = [];
     maxTaskTitleLength: number = 300;
     error: string | null = null;
-
-    private _apiUrl: string = "https://jsonplaceholder.typicode.com/todos/";
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    private async performRequest<T>(
-        apiCall: () => Promise<AxiosResponse<T>>,
-        successCallback: (response: AxiosResponse<T>) => void
-    ): Promise<void> {
-        this.error = null;
+    setTasks(tasks: Task[]): void {
+        this.tasks = tasks;
+    }
 
-        try {
-            const response = await apiCall();
-            runInAction(() => {
-                successCallback(response);
-            });
-        } catch (error: any) {
-            runInAction(() => {
-                this.error = error.message;
-            });
+    addTask(task: Task): void {
+        this.tasks.push(task);
+    }
 
-            console.error("Ошибка при выполнении API запроса:", error);
+    updateTask(task: Task): void {
+        const index = this.tasks.findIndex((t) => t.id === task.id);
+        if (index !== -1) {
+            this.tasks[index] = task;
         }
     }
 
-    fetchTasks(): Promise<void> {
-        return this.performRequest<Task[]>(
-            () => axios.get<Task[]>(this._apiUrl, { params: { _limit: 10 } }),
-            (response) => {
-                this.tasks = response.data;
-            }
-        );
+    deleteTask(taskId: number): void {
+        this.tasks = this.tasks.filter((task) => task.id !== taskId);
     }
 
-    addTask(task: Task): Promise<void> {
-        if (task.title.length === 0) return Promise.resolve();
-
-        return this.performRequest(
-            () => axios.post<Task>(this._apiUrl, task),
-            (response) => {
-                this.tasks.push({ ...response.data, id: Date.now() });
-            }
-        );
-    }
-
-    switchTaskCompleted(taskId: number): Promise<void> {
-        const task = this.tasks.find((task) => task.id === taskId);
-        if (!task) return Promise.resolve();
-
-        return this.performRequest(
-            () =>
-                axios.patch(this._apiUrl + taskId, {
-                    completed: !task.completed,
-                }),
-            () => {
-                task.completed = !task.completed;
-            }
-        );
-    }
-
-    changeTaskTitle(taskId: number, newTitle: string): Promise<void> {
-        const task = this.tasks.find((task) => task.id === taskId);
-        if (!task || newTitle.length === 0) return Promise.resolve();
-
-        return this.performRequest(
-            () =>
-                axios.patch(this._apiUrl + taskId, {
-                    title: newTitle,
-                }),
-            () => {
-                task.title = newTitle;
-            }
-        );
-    }
-
-    deleteTask(taskId: number): Promise<void> {
-        return this.performRequest(
-            () => axios.delete(this._apiUrl + taskId),
-            () => {
-                this.tasks = this.tasks.filter((task) => task.id !== taskId);
-            }
-        );
+    setError(message: string | null): void {
+        console.error(message)
+        this.error = message;
     }
 }
-
-const tasksStore = new TasksStore();
-export default tasksStore;

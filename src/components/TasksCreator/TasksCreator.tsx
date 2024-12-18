@@ -1,19 +1,14 @@
 import React, {useState} from 'react';
 import classes from "./TasksCreator.module.css"
 import AutoResizeTextarea from "../../UI/AutoResizeTextarea/AutoResizeTextarea.jsx";
-import tasksStore from "../../store/TasksStore.ts";
+import taskService, {tasksStore} from "../../services/TaskService.js";
 
 const TasksCreator = () => {
     const [newTask, setNewTask] = useState('');
     const [lengthCounterVisible, setLengthCounterVisible] = useState(false)
 
     const createTask = () => {
-        tasksStore.addTask({
-                "userId": 1,
-                "id": tasksStore.tasks.length + 1,
-                "title": newTask,
-                "completed": false
-            })
+        taskService.addTask({"title": newTask})
         setNewTask('');
     }
 

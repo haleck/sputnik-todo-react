@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./MainPage.module.css";
-import TasksList from "../../components/TasksList/TasksList.jsx";
-import TasksCreator from "../../components/TasksCreator/TasksCreator.jsx";
+import TasksList from "../../components/TasksList/TasksList.tsx";
+import TasksCreator from "../../components/TasksCreator/TasksCreator.tsx";
 import PinSvg from "../../UI/Icons/PinSvg.jsx"
 
 const MainPage = () => {

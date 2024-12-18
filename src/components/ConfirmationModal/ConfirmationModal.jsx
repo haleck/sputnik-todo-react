@@ -34,6 +34,7 @@ const ConfirmationModal = ({ title, message, onConfirm, onCancel, isVisible }) =
         <div
             className={`${classes.modalOverlay} ${closing ? classes.closing : ''}`}
             onClick={handleOverlayClick}
+            data-role={'modal'}
         >
             <div className={classes.modalContent}>
                 <h4 className={classes.header}>{title}</h4>
