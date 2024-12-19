@@ -12,7 +12,6 @@ import updatePaddingRight from "./helpers/updatePaddingRight";
 import scrollToTheEndOfList from "./helpers/scrollToTheEndOfList";
 import useDelayedCallback from "./hooks/useDelayedCallback";
 import useTaskActionsMenu from "./hooks/useTaskActionsMenu";
-import Modal from "../../components/Modal";
 
 const StyledTasksList = styled.div`
   overflow-y: auto;

@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
 
-const StyledActionsMenu = styled.div`
+const StyledActionsMenu = styled.div<{ $top: number, $left: number }>`
   position: absolute;
-  top: ${({top})=> top };
-  left: ${(left)=> left };
+  top: ${({ $top }) => $top}px;
+  left: ${({ $left }) => $left}px;
   z-index: 100;
   user-select: none;
   background-color: var(--elements-background-color);
@@ -38,8 +38,8 @@ const TaskActionsMenu: FC<TaskActionsMenuProps> = ({position, onDelete}) => {
     return (
         <StyledActionsMenu
             data-role={'actions'}
-            top={position.top}
-            left={position.left}
+            $top={position.top}
+            $left={position.left}
         >
             <button onClick={onDelete}>Удалить</button>
         </StyledActionsMenu>

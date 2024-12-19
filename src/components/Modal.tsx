@@ -33,8 +33,8 @@ const Modal: FC<ModalProps> = ({ children, onClose, isVisible }) => {
     }, [isVisible]);
 
     return (
-        <StyledModalOverlay closing={closing} onClick={handleOverlayClick}>
-            <StyledModalContent closing={closing}>
+        <StyledModalOverlay $closing={closing} onClick={handleOverlayClick}>
+            <StyledModalContent $closing={closing}>
                 {children}
             </StyledModalContent>
         </StyledModalOverlay>
@@ -77,7 +77,7 @@ const slideOut = keyframes`
   }
 `;
 
-const StyledModalOverlay = styled.div<{ closing: boolean }>`
+const StyledModalOverlay = styled.div<{ $closing: boolean }>`
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.35);
@@ -85,17 +85,17 @@ const StyledModalOverlay = styled.div<{ closing: boolean }>`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: ${({ closing }) => (closing ? fadeOut : fadeIn)} 0.3s forwards;
+  animation: ${({ $closing }) => ($closing ? fadeOut : fadeIn)} 0.3s forwards;
 `;
 
-const StyledModalContent = styled.div<{ closing: boolean }>`
+const StyledModalContent = styled.div<{ $closing: boolean }>`
   background-color: var(--elements-background-color);
   padding: 20px;
   border-radius: 10px;
   max-width: 400px;
   width: 100%;
   text-align: center;
-  animation: ${({ closing }) => (closing ? slideOut : slideIn)} 0.3s forwards;
+  animation: ${({ $closing }) => ($closing ? slideOut : slideIn)} 0.3s forwards;
 `;
 
 export default Modal;

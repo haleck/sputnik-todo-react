@@ -7,7 +7,7 @@ import taskService, {tasksStore} from "../../../services/TaskService";
 import styled, {css} from "styled-components";
 import {ITaskActionsMenu} from "../types/Types";
 
-const StyledTaskItem = styled.div`
+const StyledTaskItem = styled.div<{ $isCompleted: boolean }>`
   display: flex;
   padding: 5px 10px;
   margin-bottom: 10px;
@@ -27,7 +27,7 @@ const StyledTaskItem = styled.div`
   &:focus-within {
     background-color: var(--focus-color);
   }
-  ${({completed})=>completed && css`
+  ${({$isCompleted}) => $isCompleted && css`
     & textarea {
       text-decoration: line-through;
       color: grey;
@@ -65,7 +65,7 @@ const TaskItem: FC<TaskItemProps> = ({ task, changeActiveActionsMenu }) => {
     }
 
     return (
-        <StyledTaskItem completed={completed}>
+        <StyledTaskItem $isCompleted={completed}>
             <Checkbox
                 checked={completed}
                 onChange={switchCheckbox}
