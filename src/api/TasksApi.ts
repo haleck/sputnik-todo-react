@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Task } from "../interfaces/Task";
+import { Task } from "../types/Task";
 import {AxiosResponse} from "axios";
 
 export default class TasksApi {

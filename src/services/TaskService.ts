@@ -1,6 +1,6 @@
 import TasksApi from "../api/TasksApi";
 import TasksStore from "../store/TasksStore";
-import { Task } from "../interfaces/Task";
+import { Task } from "../types/Task";
 
 export class TasksService {
     private api: TasksApi;

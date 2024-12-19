@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 
-type TimerCallback = () => void;
+type TimerCallback = (arg?) => void;
 
 const useDelayedCallback = (callback: TimerCallback, delay: number): () => void => {
     const timerRef = useRef<number | null>(null);

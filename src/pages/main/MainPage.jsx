@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from "./MainPage.module.css";
-import TasksList from "../../components/TasksList/TasksList.tsx";
+import TasksList from "../../modules/TasksList";
 import TasksCreator from "../../components/TasksCreator/TasksCreator.tsx";
 import PinSvg from "../../UI/Icons/PinSvg.jsx"
 
