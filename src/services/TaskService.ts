@@ -23,6 +23,8 @@ export class TasksService {
     }
 
     async addTask(task: { title: string }): Promise<void> {
+        if (task.title.length === 0) return
+
         const tempTask: Task = { ...task, id: Date.now(), completed: false };
         this.store.addTask(tempTask);
 
