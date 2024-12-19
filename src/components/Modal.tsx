@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 interface ModalProps {
     children: React.ReactNode;
