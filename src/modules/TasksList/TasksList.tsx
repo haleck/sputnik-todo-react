@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import TaskItem from "./components/TaskItem/TaskItem.tsx";
+import TaskItem from "./components/TaskItem.tsx";
 import {observer} from "mobx-react-lite";
 import {reaction} from "mobx";
 import taskService, {tasksStore} from "../../services/TaskService";
@@ -7,11 +7,11 @@ import Error from "../../UI/Error/Error";
 import Loader from "../../UI/Loader/Loader";
 import styled from "styled-components";
 import TaskActionsMenu from "./components/TaskActionsMenu";
-import {ITaskActionsMenu} from "./types/Types";
 import ConfirmationModal from "../../components/ConfirmationModal/ConfirmationModal";
 import updatePaddingRight from "./helpers/updatePaddingRight";
 import scrollToTheEndOfList from "./helpers/scrollToTheEndOfList";
 import useDelayedCallback from "./hooks/useDelayedCallback";
+import useTaskActionsMenu from "./hooks/useTaskActionsMenu";
 
 const StyledTasksList = styled.div`
   overflow-y: auto;
@@ -45,15 +45,16 @@ const StyledTasksList = styled.div`
 `
 
 const TasksList: FC = observer(() => {
-    const [activeActionsMenu, setActiveActionsMenu] = useState<ITaskActionsMenu>({task: null, position: null});
-
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [showConfirmationModal, setShowConfirmationModal] = useState<boolean>(false);
+    const [prevTasksArrLen, setPrevTasksArrLen] = useState<number>(0)
 
     const listRef = useRef<HTMLDivElement | null>(null);
 
     const delayedUpdatePaddingRight = useDelayedCallback(()=>updatePaddingRight(listRef), 0)
     const delayedScrollToTheEndOfList = useDelayedCallback(()=>scrollToTheEndOfList(listRef), 100)
+
+    const {activeActionsMenu, changeActiveActionsMenu} = useTaskActionsMenu()
 
 
     useEffect(() => {
@@ -68,8 +69,16 @@ const TasksList: FC = observer(() => {
         const disposer = reaction(
             () => tasksStore.tasks.length,
             () => {
-                delayedUpdatePaddingRight()
-                // delayedScrollToTheEndOfList() нужно делать проверку, что список увеличился
+                const currentTasksArrLen = tasksStore.tasks.length;
+
+                delayedUpdatePaddingRight();
+
+                setPrevTasksArrLen((prevLen) => {
+                    if (prevLen < currentTasksArrLen) {
+                        delayedScrollToTheEndOfList();
+                    }
+                    return currentTasksArrLen;
+                });
             }
         );
 
@@ -78,34 +87,10 @@ const TasksList: FC = observer(() => {
         };
     }, []);
 
-    const changeActiveActionMenu = (newActionMenu: ITaskActionsMenu) => {
-        setActiveActionsMenu((prev: ITaskActionsMenu) => {
-            if (prev.task?.id === newActionMenu.task?.id) {
-                return {task: null, position: null};
-            }
-            return {...newActionMenu};
-        });
-    };
-
-    const closeActionsMenu = (event) => {
-        const ignoreElements = ['actions', 'actionsSvg', 'modal'];
-        if (ignoreElements.some(role => event.target.closest(`[data-role="${role}"]`))) {
-            return;
-        }
-        changeActiveActionMenu({task: null, position: null});
-    };
-
-    useEffect(() => {
-        document.addEventListener('click', closeActionsMenu);
-        return () => {
-            document.removeEventListener('click', closeActionsMenu);
-        };
-    }, []);
-
     const deleteTask = (taskId) => {
         taskService.deleteTask(taskId);
         setShowConfirmationModal(false);
-        changeActiveActionMenu({task: null, position: null});
+        changeActiveActionsMenu({task: null, position: null});
     };
 
     if (isLoading) return <Loader title="Получение списка задач..."/>;
@@ -118,7 +103,7 @@ const TasksList: FC = observer(() => {
                     <TaskItem
                         key={task.id}
                         task={task}
-                        changeActiveActionsMenu={changeActiveActionMenu}
+                        changeActiveActionsMenu={changeActiveActionsMenu}
                     />
                 ))}
             </StyledTasksList>

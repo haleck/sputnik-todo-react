@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styled from "styled-components";
 
 const StyledActionsMenu = styled.div`
@@ -26,7 +26,15 @@ const StyledActionsMenu = styled.div`
   }
 `
 
-const TaskActionsMenu = ({position, onDelete}) => {
+interface TaskActionsMenuProps {
+    position: {
+        top: number
+        left: number
+    }
+    onDelete: () => void
+}
+
+const TaskActionsMenu: FC<TaskActionsMenuProps> = ({position, onDelete}) => {
     return (
         <StyledActionsMenu
             data-role={'actions'}
