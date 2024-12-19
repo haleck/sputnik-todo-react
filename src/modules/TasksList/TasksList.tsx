@@ -7,11 +7,12 @@ import Error from "../../UI/Error/Error";
 import Loader from "../../UI/Loader/Loader";
 import styled from "styled-components";
 import TaskActionsMenu from "./components/TaskActionsMenu";
-import ConfirmationModal from "../../components/ConfirmationModal/ConfirmationModal";
+import ConfirmationModal from "../../components/ConfirmationModal";
 import updatePaddingRight from "./helpers/updatePaddingRight";
 import scrollToTheEndOfList from "./helpers/scrollToTheEndOfList";
 import useDelayedCallback from "./hooks/useDelayedCallback";
 import useTaskActionsMenu from "./hooks/useTaskActionsMenu";
+import Modal from "../../components/Modal";
 
 const StyledTasksList = styled.div`
   overflow-y: auto;
@@ -115,6 +116,7 @@ const TasksList: FC = observer(() => {
             )}
             {showConfirmationModal &&
                 <ConfirmationModal
+                    isOpen={showConfirmationModal}
                     title="Подтверждение удаления"
                     message={`Вы уверены, что хотите удалить задачу "${activeActionsMenu.task?.title}"?`}
                     onConfirm={() => deleteTask(activeActionsMenu.task?.id)}
