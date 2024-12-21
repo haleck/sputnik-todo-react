@@ -89,7 +89,7 @@ const StyledModalOverlay = styled.div<{ $closing: boolean }>`
 `;
 
 const StyledModalContent = styled.div<{ $closing: boolean }>`
-  background-color: var(--elements-background-color);
+  background-color: ${props => props.theme.background.elements};
   padding: 20px;
   border-radius: 10px;
   max-width: 400px;
@@ -97,5 +97,6 @@ const StyledModalContent = styled.div<{ $closing: boolean }>`
   text-align: center;
   animation: ${({ $closing }) => ($closing ? slideOut : slideIn)} 0.3s forwards;
 `;
+
 
 export default Modal;

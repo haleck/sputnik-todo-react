@@ -32,20 +32,20 @@ const RealCheckbox = styled.input`
 
 const CustomCheckbox = styled.span`
   display: inline-block;
-  width: calc(var(--regular-font-size) + 10px);
-  height: calc(var(--regular-font-size) + 10px);
-  border: 2px solid var(--light-main-color);
+  width: calc(${props => props.theme.font.regular} + 10px);
+  height: calc(${props => props.theme.font.regular} + 10px);
+  border: 2px solid ${props => props.theme.primary.light};
   border-radius: 50%;
   vertical-align: sub;
   position: relative;
   transition: all 0.2s ease;
-  background-color: var(--elements-background-color);
+  background-color: ${props => props.theme.background.elements};
 
   &::before {
     content: "";
     position: absolute;
-    width: calc(var(--regular-font-size) + 5px);
-    height: calc(var(--regular-font-size) + 5px);
+    width: calc(${props => props.theme.font.regular} + 5px);
+    height: calc(${props => props.theme.font.regular} + 5px);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) scale(0);
@@ -55,19 +55,18 @@ const CustomCheckbox = styled.span`
   }
 
   &:hover {
-    cursor: pointer
+    cursor: pointer;
   }
 
-  ${({$checked}) => $checked && css`
-    background-color: var(--main-color);
+  ${({ $checked }) => $checked && css`
+    background-color: ${props => props.theme.primary.main};
 
     &::before {
-      transform: translate(-50%, -50%) scale(1)
+      transform: translate(-50%, -50%) scale(1);
     }
-  `
-  }
-}
-`
+  `}
+`;
+
 
 
 

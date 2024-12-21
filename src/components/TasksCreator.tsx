@@ -33,7 +33,7 @@ const TasksCreator: FC = () => {
 };
 
 const Wrapper = styled.div`
-  background: var(--elements-background-color);
+  background: ${props => props.theme.background.elements};
   padding: 10px;
   border-radius: 10px;
   margin-top: 15px;
@@ -41,25 +41,26 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   &:focus-within {
-    background-color: var(--focus-color);
+    background-color: ${props => props.theme.states.focus};
   }
   &:hover {
-    background-color: var(--focus-color);
+    background-color: ${props => props.theme.states.focus};
   }
-`
+`;
 
 const CharCounter = styled.div`
   padding-right: 8px;
   padding-top: 5px;
   text-align: right;
-  font-size: var(--extra-small-font-size);
-  color: var(--text-color);
+  font-size: ${props => props.theme.font.extraSmall};
+  color: ${props => props.theme.text.primary};
   font-weight: 400;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
-  ${({$visible})=>$visible && css`
-    opacity: 1
+  ${({$visible}) => $visible && css`
+    opacity: 1;
   `}
-`
+`;
+
 
 export default TasksCreator;

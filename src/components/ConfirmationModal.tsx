@@ -50,6 +50,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
 
 const StyledHeader = styled.h4`
   font-weight: 600;
+  color: ${props => props.theme.text.primary};
 `;
 
 const StyledModalActions = styled.div`
@@ -64,24 +65,28 @@ const StyledButton = styled.button`
   border-radius: 8px;
   padding: 10px 20px;
   cursor: pointer;
+  font-size: ${props => props.theme.font.regular};
 `;
 
 const StyledConfirmButton = styled(StyledButton)`
-  background-color: var(--light-main-color);
+  background-color: ${props => props.theme.primary.light};
   color: #fff;
   border: none;
+
   &:hover {
-    background-color: var(--main-color);
+    background-color: ${props => props.theme.primary.main};
   }
 `;
 
 const StyledCancelButton = styled(StyledButton)`
-  background-color: #ccc;
-  color: #000;
+  background-color: ${props => props.theme.states.hover};
+  color: ${props => props.theme.text.primary};
   border: none;
+
   &:hover {
-    background-color: #b0b0b0;
+    background-color: ${props => props.theme.states.disabled};
   }
 `;
+
 
 export default ConfirmationModal;

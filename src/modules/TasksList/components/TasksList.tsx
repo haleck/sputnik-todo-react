@@ -98,7 +98,7 @@ const TasksList: FC = observer(() => {
 const StyledTasksList = styled.div`
   overflow-y: auto;
   margin-top: 10px;
-  scrollbar-color: var(--scrollbar-color);
+  scrollbar-color: ${props => props.theme.scrollbar.default};
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -111,19 +111,20 @@ const StyledTasksList = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-color);
+    background-color: ${props => props.theme.scrollbar.default};
     border-radius: 10px;
     border: none;
     transition: background-color 0.15s ease;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: var(--light-main-color);
+    background-color: ${props => props.theme.primary.light};
   }
 
   &::-webkit-scrollbar-button {
     display: none;
   }
-`
+`;
+
 
 export default TasksList;

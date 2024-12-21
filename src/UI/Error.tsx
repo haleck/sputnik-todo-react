@@ -19,8 +19,8 @@ const Error: FC<ErrorProps> = ({message}) => {
 };
 
 const StyledError = styled.div`
-  color: var(--error-color);
-  font-size: var(--regular-font-size);
+  color: ${props => props.theme.states.error};
+  font-size: ${props => props.theme.font.regular};
   margin-top: 20px;
   text-align: center;
 `

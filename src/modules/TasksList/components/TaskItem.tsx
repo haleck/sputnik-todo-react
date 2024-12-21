@@ -72,26 +72,31 @@ const StyledTaskItem = styled.div<{ $isCompleted: boolean }>`
   margin-bottom: 10px;
   gap: 5px;
   transition: all 0.15s ease;
-  background-color: var(--elements-background-color);
+  background-color: ${props => props.theme.background.elements};
   border-radius: 10px;
   position: relative;
+
   &:hover {
-    background-color: var(--hover-color);
+    background-color: ${props => props.theme.states.hover};
     cursor: pointer;
     border-radius: 10px;
   }
+
   &:last-child {
     margin-bottom: 0;
   }
+
   &:focus-within {
-    background-color: var(--focus-color);
+    background-color: ${props => props.theme.states.focus};
   }
-  ${({$isCompleted}) => $isCompleted && css`
+
+  ${({ $isCompleted }) => $isCompleted && css`
     & textarea {
       text-decoration: line-through;
-      color: grey;
+      color: ${props => props.theme.states.disabled};
     }
   `}
-`
+`;
+
 
 export default TaskItem;

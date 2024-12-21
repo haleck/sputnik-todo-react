@@ -64,10 +64,10 @@ const AutoResizeTextarea: FC<AutoResizeTextareaProps> = ({
 const StyledTextarea = styled.textarea`
   resize: none;
   overflow: hidden;
-  font-size: var(--regular-font-size);
+  font-size: ${props => props.theme.font.regular};
   width: 100%;
   border: none;
-  color: var(--text-color);
+  color: ${props => props.theme.text.primary};
   outline: none;
   font-weight: 400;
   background-color: inherit;

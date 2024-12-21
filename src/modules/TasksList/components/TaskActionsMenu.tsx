@@ -27,8 +27,8 @@ const StyledActionsMenu = styled.div<{ $top: number, $left: number }>`
   left: ${({ $left }) => $left}px;
   z-index: 100;
   user-select: none;
-  background-color: var(--elements-background-color);
-  border: 1px solid var(--content-background-color);
+  background-color: ${props => props.theme.background.elements};
+  border: 1px solid ${props => props.theme.background.content};
   padding: 5px;
   border-radius: 10px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
@@ -36,17 +36,18 @@ const StyledActionsMenu = styled.div<{ $top: number, $left: number }>`
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
-`
+`;
 
 const StyledButton = styled.button`
-  font-size: var(--extra-small-font-size);
+  font-size: ${props => props.theme.font.extraSmall};
   background-color: transparent;
-  color: var(--text-color);
+  color: ${props => props.theme.text.primary};
   border: none;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s;
-`
+`;
+
 
 export default TaskActionsMenu;
