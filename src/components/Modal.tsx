@@ -7,16 +7,16 @@ interface ModalProps {
     isVisible?: boolean
 }
 
-const Modal: FC<ModalProps> = ({ children, onClose, isVisible }) => {
-    const [closing, setClosing] = useState(false);
+const Modal: FC<ModalProps> = ({children, onClose, isVisible}) => {
+    const [closing, setClosing] = useState<boolean>(false);
 
-    const handleOverlayClick = (event: React.MouseEvent) => {
+    const handleOverlayClick = (event: React.MouseEvent): void => {
         if (event.target === event.currentTarget) {
             closeModal();
         }
     };
 
-    const closeModal = () => {
+    const closeModal = (): void => {
         setClosing(true);
         setTimeout(() => {
             setClosing(false);
@@ -99,4 +99,3 @@ const StyledModalContent = styled.div<{ $closing: boolean }>`
 `;
 
 export default Modal;
-

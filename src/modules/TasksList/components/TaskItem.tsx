@@ -1,39 +1,10 @@
 import React, {FC, useState} from 'react';
-import Checkbox from "../../../UI/Checkbox/Checkbox.jsx";
-import AutoResizeTextarea from "../../../UI/AutoResizeTextarea/AutoResizeTextarea.jsx";
-import OptionsSvg from "../icons/OptionsSvg";
+import Checkbox from "../../../UI/Checkbox";
+import AutoResizeTextarea from "../../../UI/AutoResizeTextarea";
 import {Task} from "../../../types/Task";
 import taskService, {tasksStore} from "../../../services/TaskService";
 import styled, {css} from "styled-components";
-import {ITaskActionsMenu} from "../types/Types";
-
-const StyledTaskItem = styled.div<{ $isCompleted: boolean }>`
-  display: flex;
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  gap: 5px;
-  transition: all 0.15s ease;
-  background-color: var(--elements-background-color);
-  border-radius: 10px;
-  position: relative;
-  &:hover {
-    background-color: var(--hover-color);
-    cursor: pointer;
-    border-radius: 10px;
-  }
-  &:last-child {
-    margin-bottom: 0;
-  }
-  &:focus-within {
-    background-color: var(--focus-color);
-  }
-  ${({$isCompleted}) => $isCompleted && css`
-    & textarea {
-      text-decoration: line-through;
-      color: grey;
-    }
-  `}
-`
+import {ITaskActionsMenu} from "../types/ActionsMenu";
 
 interface TaskItemProps {
     task: Task
@@ -44,16 +15,16 @@ const TaskItem: FC<TaskItemProps> = ({ task, changeActiveActionsMenu }) => {
     const [title, setTitle] = useState<string>(task.title);
     const [completed, setCompleted] = useState<boolean>(task.completed);
 
-    const switchCheckbox = () => {
+    const switchCheckbox = (): void => {
         taskService.switchTaskCompleted(task.id);
         setCompleted(!completed);
     };
 
-    const changeTaskTitle = () => {
+    const changeTaskTitle = (): void => {
         taskService.changeTaskTitle(task.id, title);
     };
 
-    const handleOptionsClick = (event: React.MouseEvent) => {
+    const handleOptionsClick = (event: React.MouseEvent): void => {
         const rect = (event.target as HTMLElement).getBoundingClientRect();
         changeActiveActionsMenu({
             task: task,
@@ -87,5 +58,40 @@ const TaskItem: FC<TaskItemProps> = ({ task, changeActiveActionsMenu }) => {
         </StyledTaskItem>
     );
 };
+
+const OptionsSvg = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed" {...props}>
+        <path
+            d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/>
+    </svg>
+);
+
+const StyledTaskItem = styled.div<{ $isCompleted: boolean }>`
+  display: flex;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  gap: 5px;
+  transition: all 0.15s ease;
+  background-color: var(--elements-background-color);
+  border-radius: 10px;
+  position: relative;
+  &:hover {
+    background-color: var(--hover-color);
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:focus-within {
+    background-color: var(--focus-color);
+  }
+  ${({$isCompleted}) => $isCompleted && css`
+    & textarea {
+      text-decoration: line-through;
+      color: grey;
+    }
+  `}
+`
 
 export default TaskItem;

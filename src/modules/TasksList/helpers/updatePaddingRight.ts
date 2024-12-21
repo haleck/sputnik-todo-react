@@ -5,7 +5,7 @@
  * @param {React.RefObject<HTMLElement>} listRef - Ссылка на DOM-элемент списка, для которого проверяется наличие полосы прокрутки.
  * @returns {void} Функция не возвращает значения.
  */
-const updatePaddingRight = (listRef) => {
+const updatePaddingRight = (listRef): void => {
     const listElement = listRef.current;
     if (listElement) {
         const hasScrollbar = listElement.scrollHeight > listElement.clientHeight;

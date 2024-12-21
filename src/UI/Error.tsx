@@ -1,19 +1,6 @@
 import React, {FC} from 'react';
 import styled from "styled-components"
 
-const StyledError = styled.div`
-  color: var(--error-color);
-  font-size: var(--regular-font-size);
-  margin-top: 20px;
-  text-align: center;
-`
-
-const StyledSvg = styled.svg`
-  fill: currentColor;
-  width: 35px;
-  height: 35px;
-`
-
 interface ErrorProps {
     message: string
 }
@@ -30,5 +17,18 @@ const Error: FC<ErrorProps> = ({message}) => {
         </StyledError>
     );
 };
+
+const StyledError = styled.div`
+  color: var(--error-color);
+  font-size: var(--regular-font-size);
+  margin-top: 20px;
+  text-align: center;
+`
+
+const StyledSvg = styled.svg`
+  fill: currentColor;
+  width: 35px;
+  height: 35px;
+`
 
 export default Error;

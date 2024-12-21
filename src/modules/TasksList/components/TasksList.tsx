@@ -1,48 +1,17 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import TaskItem from "./components/TaskItem.tsx";
+import TaskItem from "./TaskItem.tsx";
 import {observer} from "mobx-react-lite";
 import {reaction} from "mobx";
-import taskService, {tasksStore} from "../../services/TaskService";
-import Error from "../../UI/Error/Error";
-import Loader from "../../UI/Loader/Loader";
+import taskService, {tasksStore} from "../../../services/TaskService";
+import Error from "../../../UI/Error";
+import Loader from "../../../UI/Loader";
 import styled from "styled-components";
-import TaskActionsMenu from "./components/TaskActionsMenu";
-import ConfirmationModal from "../../components/ConfirmationModal";
-import updatePaddingRight from "./helpers/updatePaddingRight";
-import scrollToTheEndOfList from "./helpers/scrollToTheEndOfList";
-import useDelayedCallback from "./hooks/useDelayedCallback";
-import useTaskActionsMenu from "./hooks/useTaskActionsMenu";
-
-const StyledTasksList = styled.div`
-  overflow-y: auto;
-  margin-top: 10px;
-  scrollbar-color: var(--scrollbar-color);
-
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
-    opacity: 1;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-color);
-    border-radius: 10px;
-    border: none;
-    transition: background-color 0.15s ease;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: var(--light-main-color);
-  }
-
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
-`
+import TaskActionsMenu from "./TaskActionsMenu";
+import ConfirmationModal from "../../../components/ConfirmationModal";
+import updatePaddingRight from "../helpers/updatePaddingRight";
+import scrollToTheEndOfList from "../helpers/scrollToTheEndOfList";
+import useDelayedCallback from "../hooks/useDelayedCallback";
+import useTaskActionsMenu from "../hooks/useTaskActionsMenu";
 
 const TasksList: FC = observer(() => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -58,7 +27,7 @@ const TasksList: FC = observer(() => {
 
 
     useEffect(() => {
-        const fetchTasks = async () => {
+        const fetchTasks = async (): Promise<void> => {
             setIsLoading(true)
             await taskService.fetchTasks();
             setTimeout(() => setIsLoading(false), 500)
@@ -87,7 +56,7 @@ const TasksList: FC = observer(() => {
         };
     }, []);
 
-    const deleteTask = (taskId) => {
+    const deleteTask = (taskId): void => {
         taskService.deleteTask(taskId);
         setShowConfirmationModal(false);
         changeActiveActionsMenu({task: null, position: null});
@@ -125,5 +94,36 @@ const TasksList: FC = observer(() => {
         </>
     );
 });
+
+const StyledTasksList = styled.div`
+  overflow-y: auto;
+  margin-top: 10px;
+  scrollbar-color: var(--scrollbar-color);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    opacity: 1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-color);
+    border-radius: 10px;
+    border: none;
+    transition: background-color 0.15s ease;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--light-main-color);
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+`
 
 export default TasksList;

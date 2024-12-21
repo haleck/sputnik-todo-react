@@ -10,13 +10,13 @@ interface ConfirmationModalProps {
 }
 
 const ConfirmationModal: FC<ConfirmationModalProps> = ({
-       title,
-       message,
-       onConfirm,
-       onCancel,
-   }) => {
-    const [closing, setClosing] = useState(false)
-    const handleConfirm = () => {
+        title,
+        message,
+        onConfirm,
+        onCancel,
+    }) => {
+    const [closing, setClosing] = useState<boolean>(false)
+    const handleConfirm = (): void => {
         setClosing(true)
         setTimeout(()=>{
             setClosing(false)
@@ -24,7 +24,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
         }, 300)
     };
 
-    const handleCancel = () => {
+    const handleCancel = (): void => {
         setClosing(true)
         setTimeout(()=>{
             setClosing(false)
@@ -40,7 +40,9 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
                 <StyledConfirmButton onClick={handleConfirm}>
                     Подтвердить
                 </StyledConfirmButton>
-                <StyledCancelButton onClick={handleCancel}>Отмена</StyledCancelButton>
+                <StyledCancelButton onClick={handleCancel}>
+                    Отмена
+                </StyledCancelButton>
             </StyledModalActions>
         </Modal>
     );

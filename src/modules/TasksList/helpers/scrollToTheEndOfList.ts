@@ -7,7 +7,7 @@ import React from "react";
  * @param {React.RefObject<HTMLElement>} listRef - Ссылка на DOM-элемент списка, который нужно прокрутить.
  * @returns {void} Функция не возвращает значения.
  */
-const scrollToTheEndOfList = (listRef: React.RefObject<HTMLElement>) => {
+const scrollToTheEndOfList = (listRef: React.RefObject<HTMLElement>): void => {
     if (listRef.current) {
         listRef.current.scrollTo({
             top: listRef.current.scrollHeight,

@@ -1,23 +1,23 @@
 import React, {FC, useState} from 'react';
-import AutoResizeTextarea from "../UI/AutoResizeTextarea/AutoResizeTextarea.jsx";
+import AutoResizeTextarea from "../UI/AutoResizeTextarea";
 import taskService, {tasksStore} from "../services/TaskService";
 import styled, {css} from "styled-components";
 
 const TasksCreator: FC = () => {
-    const [newTask, setNewTask] = useState('');
-    const [lengthCounterVisible, setLengthCounterVisible] = useState(false)
+    const [newTaskTitle, setNewTaskTitle] = useState<string>('');
+    const [lengthCounterVisible, setLengthCounterVisible] = useState<boolean>(false)
 
-    const createTask = () => {
-        taskService.addTask({"title": newTask})
-        setNewTask('');
+    const createTask = (): void => {
+        taskService.addTask({"title": newTaskTitle})
+        setNewTaskTitle('');
     }
 
     return (
         <>
             <Wrapper>
                 <AutoResizeTextarea
-                    text={newTask}
-                    setText={setNewTask}
+                    text={newTaskTitle}
+                    setText={setNewTaskTitle}
                     maxLength={tasksStore.maxTaskTitleLength}
                     handleEnter={createTask}
                     placeholder={'Новая задача'}
@@ -26,7 +26,7 @@ const TasksCreator: FC = () => {
                 />
             </Wrapper>
             <CharCounter $visible={lengthCounterVisible}>
-                {newTask.length}/{tasksStore.maxTaskTitleLength} символов
+                {newTaskTitle.length}/{tasksStore.maxTaskTitleLength} символов
             </CharCounter>
         </>
     );

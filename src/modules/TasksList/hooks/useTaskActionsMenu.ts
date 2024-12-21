@@ -1,5 +1,17 @@
 import {useEffect, useState} from "react";
-import {ITaskActionsMenu} from "../types/Types";
+import {ITaskActionsMenu} from "../types/ActionsMenu";
+
+/**
+ * Хук для управления состоянием контекстного меню действий задачи.
+ * Позволяет открывать, закрывать и переключать активное меню, а также автоматически закрывать его при клике вне целевых элементов.
+ *
+ * @returns {{
+ *  *   activeActionsMenu: ITaskActionsMenu;
+ *  *   changeActiveActionsMenu: (newActionMenu: ITaskActionsMenu) => void;
+ *  * }}
+ * - `activeActionsMenu` - Текущее активное меню действий.
+ * - `changeActiveActionsMenu` - Функция для переключения активного меню.
+ */
 
 const useTaskActionsMenu = () => {
     const [activeActionsMenu, setActiveActionsMenu] = useState<ITaskActionsMenu>({task: null, position: null});
