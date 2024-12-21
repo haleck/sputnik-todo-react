@@ -1,6 +1,6 @@
 import TasksApi from "../api/TasksApi";
 import TasksStore from "../store/TasksStore";
-import { Task } from "../types/Task";
+import {Task} from "../types/Task";
 
 export class TasksService {
     private api: TasksApi;
@@ -14,7 +14,13 @@ export class TasksService {
     async fetchTasks(): Promise<void> {
         try {
             const response = await this.api.fetchTasks();
-            const tasks = response.data;
+
+            const tasks = response.data.data.map(item => {
+                return {
+                    id: item.id,
+                    ...item.attributes
+                }
+            })
 
             this.store.setTasks(tasks);
         } catch (error: any) {
@@ -22,17 +28,17 @@ export class TasksService {
         }
     }
 
-    async addTask(task: { title: string }): Promise<void> {
-        if (task.title.length === 0) return
+    async addTask(task: Omit<Task, "id">): Promise<void> {
+        if (task.name.length === 0) return
 
-        const tempTask: Task = { ...task, id: Date.now(), completed: false };
+        const tempTask: Task = {...task, id: Date.now()};
         this.store.addTask(tempTask);
 
         try {
-            const response = await this.api.addTask(tempTask);
-            const newTask = response.data
+            const response = await this.api.addTask(task);
 
-            this.store.updateTask({ ...tempTask, id: newTask.id });
+            this.store.deleteTask(tempTask.id)
+            this.store.addTask({...tempTask, id: response.data.data.id});
         } catch (error: any) {
             this.store.deleteTask(tempTask.id);
             this.store.setError(error.message);
@@ -40,14 +46,14 @@ export class TasksService {
     }
 
     async switchTaskCompleted(taskId: number): Promise<void> {
-        const task = this.store.tasks.find((task) => task.id === taskId);
+        const task = this.findTaskInStore(taskId);
         if (!task) return;
 
-        const tempTask = { ...task, completed: !task.completed };
-        this.store.updateTask(tempTask);
+        const newTask = {...task, status: task.status === "completed" ? "not completed" : "completed"};
+        this.store.updateTask(newTask);
 
         try {
-            await this.api.switchTaskCompleted(taskId, tempTask.completed);
+            await this.api.updateTask(newTask);
         } catch (error: any) {
             this.store.updateTask(task);
             this.store.setError(error.message);
@@ -55,14 +61,14 @@ export class TasksService {
     }
 
     async changeTaskTitle(taskId: number, newTitle: string): Promise<void> {
-        const task = this.store.tasks.find((task) => task.id === taskId);
+        const task = this.findTaskInStore(taskId);
         if (!task) return;
 
-        const tempTask = { ...task, title: newTitle };
-        this.store.updateTask(tempTask);
+        const newTask = {...task, name: newTitle};
+        this.store.updateTask(newTask);
 
         try {
-            await this.api.changeTaskTitle(taskId, newTitle);
+            await this.api.updateTask(newTask);
         } catch (error: any) {
             this.store.updateTask(task);
             this.store.setError(error.message);
@@ -81,6 +87,10 @@ export class TasksService {
             this.store.addTask(task);
             this.store.setError(error.message);
         }
+    }
+
+    findTaskInStore(taskId: number) {
+        return this.store.tasks.find((task) => task.id === taskId);
     }
 }
 

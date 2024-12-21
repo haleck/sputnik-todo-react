@@ -12,8 +12,8 @@ interface TaskItemProps {
 }
 
 const TaskItem: FC<TaskItemProps> = ({ task, changeActiveActionsMenu }) => {
-    const [title, setTitle] = useState<string>(task.title);
-    const [completed, setCompleted] = useState<boolean>(task.completed);
+    const [title, setTitle] = useState<string>(task.name);
+    const [completed, setCompleted] = useState<boolean>(task.status === "completed");
 
     const switchCheckbox = (): void => {
         taskService.switchTaskCompleted(task.id);
@@ -76,18 +76,18 @@ const StyledTaskItem = styled.div<{ $isCompleted: boolean }>`
   border-radius: 10px;
   position: relative;
 
-  &:hover {
-    background-color: ${props => props.theme.states.hover};
-    cursor: pointer;
-    border-radius: 10px;
-  }
-
   &:last-child {
     margin-bottom: 0;
   }
 
   &:focus-within {
     background-color: ${props => props.theme.states.focus};
+  }
+
+  &:hover {
+    background-color: ${props => props.theme.states.hover};
+    cursor: pointer;
+    border-radius: 10px;
   }
 
   ${({ $isCompleted }) => $isCompleted && css`

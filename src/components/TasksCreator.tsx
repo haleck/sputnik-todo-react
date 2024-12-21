@@ -8,7 +8,11 @@ const TasksCreator: FC = () => {
     const [lengthCounterVisible, setLengthCounterVisible] = useState<boolean>(false)
 
     const createTask = (): void => {
-        taskService.addTask({"title": newTaskTitle})
+        taskService.addTask({
+            name: newTaskTitle,
+            description: "ssd",
+            status: "not completed",
+        })
         setNewTaskTitle('');
     }
 
