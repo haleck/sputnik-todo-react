@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, {forwardRef, useEffect, useRef} from 'react';
 import styled from "styled-components";
 
-interface AutoResizeTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface AutoResizeTextareaProps {
     text: string;
     setText: (newText: string) => void;
     onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
@@ -9,14 +9,14 @@ interface AutoResizeTextareaProps extends React.TextareaHTMLAttributes<HTMLTextA
     handleEnter?: (args?: any) => void;
 }
 
-const AutoResizeTextarea: FC<AutoResizeTextareaProps> = ({
+const AutoResizeTextarea = forwardRef<HTMLTextAreaElement, AutoResizeTextareaProps>(({
         text,
         setText,
         onBlur,
         maxLength,
         handleEnter,
         ...props
-    }) => {
+    }, ref) => {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
     useEffect(() => {
@@ -50,7 +50,11 @@ const AutoResizeTextarea: FC<AutoResizeTextareaProps> = ({
 
     return (
         <StyledTextarea
-            ref={textareaRef}
+            ref={(node) => {
+                textareaRef.current = node;
+                if (typeof ref === 'function') ref(node);
+                else if (ref) (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
+            }}
             value={text}
             onChange={handleChange}
             onBlur={onBlur}
@@ -59,7 +63,7 @@ const AutoResizeTextarea: FC<AutoResizeTextareaProps> = ({
             {...props}
         />
     );
-};
+})
 
 const StyledTextarea = styled.textarea`
   resize: none;
@@ -72,6 +76,7 @@ const StyledTextarea = styled.textarea`
   font-weight: 400;
   background-color: inherit;
   cursor: default;
+  padding: 3px;
 `;
 
 export default AutoResizeTextarea;

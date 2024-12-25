@@ -30,7 +30,10 @@ const TasksList: FC = observer(() => {
         const fetchTasks = async (): Promise<void> => {
             setIsLoading(true)
             await taskService.fetchTasks();
-            setTimeout(() => setIsLoading(false), 500)
+            setTimeout(() => {
+                setIsLoading(false)
+                delayedUpdatePaddingRight()
+            }, 500)
         }
 
         fetchTasks()
@@ -57,13 +60,14 @@ const TasksList: FC = observer(() => {
     }, []);
 
     const deleteTask = (taskId): void => {
-        taskService.deleteTask(taskId);
         setShowConfirmationModal(false);
         changeActiveActionsMenu({task: null, position: null});
+        taskService.deleteTask(taskId);
     };
 
     if (isLoading) return <Loader title="Получение списка задач..."/>;
     if (tasksStore.error) return <Error message={tasksStore.error}/>;
+    if (!isLoading && tasksStore.tasks.length === 0) return <StyledEmptyList>Список задач пуст</StyledEmptyList>
 
     return (
         <>
@@ -73,6 +77,7 @@ const TasksList: FC = observer(() => {
                         key={task.id}
                         task={task}
                         changeActiveActionsMenu={changeActiveActionsMenu}
+                        delayedUpdatePaddingRight={delayedUpdatePaddingRight}
                     />
                 ))}
             </StyledTasksList>
@@ -86,7 +91,7 @@ const TasksList: FC = observer(() => {
                 <ConfirmationModal
                     isOpen={showConfirmationModal}
                     title="Подтверждение удаления"
-                    message={`Вы уверены, что хотите удалить задачу "${activeActionsMenu.task?.title}"?`}
+                    message={`Вы уверены, что хотите удалить задачу "${activeActionsMenu.task?.name}"?`}
                     onConfirm={() => deleteTask(activeActionsMenu.task?.id)}
                     onCancel={()=> setShowConfirmationModal(false)}
                 />
@@ -94,6 +99,14 @@ const TasksList: FC = observer(() => {
         </>
     );
 });
+
+const StyledEmptyList = styled.div`
+  text-align: center;
+  font-size: ${props=> props.theme.font.regular};
+  font-weight: 500;
+  color: ${props => props.theme.states.disabled};
+  margin-block: 13px;
+`
 
 const StyledTasksList = styled.div`
   overflow-y: auto;

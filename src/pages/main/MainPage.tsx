@@ -31,7 +31,6 @@ const StyledWrapper = styled.div`
 const StyledContent = styled.div`
   background-color: ${props => props.theme.background.content};
   width: min(100vw, 640px);
-  min-height: min(100dvh, 640px);
   max-height: 95dvh;
   margin: 0 auto;
   padding: 20px;
