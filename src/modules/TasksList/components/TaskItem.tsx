@@ -14,7 +14,7 @@ interface TaskItemProps {
 }
 
 const TaskItem: FC<TaskItemProps> = ({task, changeActiveActionsMenu, delayedUpdatePaddingRight}) => {
-    const [title, setTitle] = useState<string>(task.name);
+    const [title, setTitle] = useState<string>(task.title);
     const [completed, setCompleted] = useState<boolean>(task.status === "completed");
     const [isEditing, setIsEditing] = useState<boolean>(false);
 

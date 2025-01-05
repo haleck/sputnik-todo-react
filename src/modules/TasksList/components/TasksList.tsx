@@ -91,7 +91,7 @@ const TasksList: FC = observer(() => {
                 <ConfirmationModal
                     isOpen={showConfirmationModal}
                     title="Подтверждение удаления"
-                    message={`Вы уверены, что хотите удалить задачу "${activeActionsMenu.task?.name}"?`}
+                    message={`Вы уверены, что хотите удалить задачу "${activeActionsMenu.task?.title}"?`}
                     onConfirm={() => deleteTask(activeActionsMenu.task?.id)}
                     onCancel={()=> setShowConfirmationModal(false)}
                 />
