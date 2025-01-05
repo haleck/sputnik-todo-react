@@ -9,7 +9,7 @@ const TasksCreator: FC = () => {
 
     const createTask = (): void => {
         taskService.addTask({
-            name: newTaskTitle,
+            title: newTaskTitle,
             description: "ssd",
             status: "not completed",
         })

@@ -27,14 +27,14 @@ export default class TasksApi {
             if (i === 10) {
                 this._tasks.push({
                     id: this._taskIdCounter++,
-                    name: `Task ${i + 1} asdhf ol;jasdhfkjlashd lkfjhaslkjdfhjlkasdh flkjashdjklfhaslkjdfhkjl23hjklh sdkfhasjkldhf jklasdhfjkl askjldfha jlksdfhljkh2jk3lr hkjlsdhfkjlsa dhflkjashdfkj lashdjklf askljdfh lkjasdhfkjsd`,
+                    title: `Task ${i + 1} asdhf ol;jasdhfkjlashd lkfjhaslkjdfhjlkasdh flkjashdjklfhaslkjdfhkjl23hjklh sdkfhasjkldhf jklasdhfjkl askjldfha jlksdfhljkh2jk3lr hkjlsdhfkjlsa dhflkjashdfkj lashdjklf askljdfh lkjasdhfkjsd`,
                     description: `Description for Task ${i + 1} asdhf ol;jasdhfkjlashd lkfjhaslkjdfhjlkasdh flkjashdjklfhaslkjdfhkjl23hjklh sdkfhasjkldhf jklasdhfjkl askjldfha jlksdfhljkh2jk3lr hkjlsdhfkjlsa dhflkjashdfkj lashdjklf askljdfh lkjasdhfkjsd`,
                     status: "pending"
                 });
             } else {
                 this._tasks.push({
                     id: this._taskIdCounter++,
-                    name: `Task ${i + 1}`,
+                    title: `Task ${i + 1}`,
                     description: `Description for Task ${i + 1}`,
                     status: i % 2 === 0 ? "completed" : "pending"
                 });
@@ -50,7 +50,7 @@ export default class TasksApi {
                         data: this._tasks.map((task) => ({
                             id: task.id,
                             attributes: {
-                                name: task.name,
+                                title: task.title,
                                 description: task.description,
                                 status: task.status
                             }
@@ -75,7 +75,7 @@ export default class TasksApi {
                         data: {
                             id: newTask.id,
                             attributes: {
-                                name: newTask.name,
+                                title: newTask.title,
                                 description: newTask.description,
                                 status: newTask.status
                             }
@@ -98,7 +98,7 @@ export default class TasksApi {
                             data: {
                                 id: task.id,
                                 attributes: {
-                                    name: task.name,
+                                    title: task.title,
                                     description: task.description,
                                     status: task.status
                                 }
@@ -130,7 +130,7 @@ export default class TasksApi {
                         data: {
                             id: taskId,
                             attributes: {
-                                name: "Deleted Task",
+                                title: "Deleted Task",
                                 description: "This task was deleted.",
                                 status: "deleted"
                             }

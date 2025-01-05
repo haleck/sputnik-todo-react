@@ -29,7 +29,8 @@ export class TasksService {
     }
 
     async addTask(task: Omit<Task, "id">): Promise<void> {
-        if (task.name.length === 0) return
+        console.log(`test ${task}`)
+        if (task.title.length === 0) return
 
         const tempTask: Task = {...task, id: Date.now()};
         this.store.addTask(tempTask);
@@ -64,7 +65,7 @@ export class TasksService {
         const task = this.findTaskInStore(taskId);
         if (!task) return;
 
-        const newTask = {...task, name: newTitle};
+        const newTask = {...task, title: newTitle};
         this.store.updateTask(newTask);
 
         try {
