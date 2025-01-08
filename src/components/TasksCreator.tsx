@@ -17,8 +17,8 @@ const TasksCreator: FC = () => {
     }
 
     return (
-        <>
-            <Wrapper>
+        <Wrapper>
+            <TextareaWrapper>
                 <AutoResizeTextarea
                     text={newTaskTitle}
                     setText={setNewTaskTitle}
@@ -28,15 +28,19 @@ const TasksCreator: FC = () => {
                     onFocus={()=>setLengthCounterVisible(true)}
                     onBlur={()=>setLengthCounterVisible(false)}
                 />
-            </Wrapper>
+            </TextareaWrapper>
             <CharCounter $visible={lengthCounterVisible}>
                 {newTaskTitle.length}/{tasksStore.maxTaskTitleLength} символов
             </CharCounter>
-        </>
+        </Wrapper>
     );
 };
 
 const Wrapper = styled.div`
+  padding-right: 20px;
+`
+
+const TextareaWrapper = styled.div`
   background: ${props => props.theme.background.elements};
   padding: 10px;
   border-radius: 10px;

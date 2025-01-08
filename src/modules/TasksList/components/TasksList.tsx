@@ -8,7 +8,6 @@ import Loader from "../../../UI/Loader";
 import styled from "styled-components";
 import TaskActionsMenu from "./TaskActionsMenu";
 import ConfirmationModal from "../../../components/ConfirmationModal";
-import updatePaddingRight from "../helpers/updatePaddingRight";
 import scrollToTheEndOfList from "../helpers/scrollToTheEndOfList";
 import useDelayedCallback from "../hooks/useDelayedCallback";
 import useTaskActionsMenu from "../hooks/useTaskActionsMenu";
@@ -20,7 +19,6 @@ const TasksList: FC = observer(() => {
 
     const listRef = useRef<HTMLDivElement | null>(null);
 
-    const delayedUpdatePaddingRight = useDelayedCallback(()=>updatePaddingRight(listRef), 0)
     const delayedScrollToTheEndOfList = useDelayedCallback(()=>scrollToTheEndOfList(listRef), 100)
 
     const {activeActionsMenu, changeActiveActionsMenu} = useTaskActionsMenu()
@@ -32,7 +30,6 @@ const TasksList: FC = observer(() => {
             await taskService.fetchTasks();
             setTimeout(() => {
                 setIsLoading(false)
-                delayedUpdatePaddingRight()
             }, 500)
         }
 
@@ -42,8 +39,6 @@ const TasksList: FC = observer(() => {
             () => tasksStore.tasks.length,
             () => {
                 const currentTasksArrLen = tasksStore.tasks.length;
-
-                delayedUpdatePaddingRight();
 
                 setPrevTasksArrLen((prevLen) => {
                     if (prevLen < currentTasksArrLen) {
@@ -77,7 +72,6 @@ const TasksList: FC = observer(() => {
                         key={task.id}
                         task={task}
                         changeActiveActionsMenu={changeActiveActionsMenu}
-                        delayedUpdatePaddingRight={delayedUpdatePaddingRight}
                     />
                 ))}
             </StyledTasksList>
@@ -109,13 +103,14 @@ const StyledEmptyList = styled.div`
 `
 
 const StyledTasksList = styled.div`
-  overflow-y: auto;
+  scrollbar-gutter: stable;
+  overflow: auto;
   margin-top: 10px;
-  scrollbar-color: ${props => props.theme.scrollbar.default};
+  scrollbar-color: ${props => props.theme.scrollbar.color};
+  padding-right: calc(20px - ${props => props.theme.scrollbar.width});
 
   &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: ${props => props.theme.scrollbar.width};
   }
 
   &::-webkit-scrollbar-track {
@@ -124,7 +119,7 @@ const StyledTasksList = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${props => props.theme.scrollbar.default};
+    background-color: ${props => props.theme.scrollbar.color};
     border-radius: 10px;
     border: none;
     transition: background-color 0.15s ease;

@@ -24,7 +24,8 @@ const theme: Theme= {
         error: "tomato",
     },
     scrollbar: {
-        default: "rgba(92, 164, 159, 0.8)",
+        color: "rgba(52,146,138,0.8)",
+        width: "10px",
     },
     font: {
         large: "26px",

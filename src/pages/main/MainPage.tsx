@@ -33,28 +33,16 @@ const StyledContent = styled.div`
   width: min(100vw, 640px);
   max-height: 95dvh;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 0 20px 20px;
   border: 3px solid ${props => props.theme.primary.light};
   border-radius: 15px;
   display: flex;
   flex-direction: column;
 
-  @media ${props => props.theme.media.laptop} {
-    padding: 15px;
-  }
-
-  @media ${props => props.theme.media.tablet} {
-    padding: 10px;
-  }
-
   @media ${props => props.theme.media.phone} {
     border-radius: 0;
     border: none;
     min-height: 100dvh;
-  }
-
-  @media ${props => props.theme.media.smallPhone} {
-    padding: 5px;
   }
 `;
 
@@ -66,6 +54,7 @@ const StyledHeader = styled.div`
   font-size: ${props => props.theme.font.large};
   font-weight: 700;
   color: ${props => props.theme.text.primary};
+  padding-right: 20px;
 `;
 
 const StyledSvg = styled.svg`

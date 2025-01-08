@@ -17,7 +17,8 @@ export type Theme = {
         error: string;
     },
     scrollbar: {
-        default: string;
+        color: string;
+        width: string;
     },
     font: {
         large: string;

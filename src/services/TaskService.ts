@@ -29,7 +29,6 @@ export class TasksService {
     }
 
     async addTask(task: Omit<Task, "id">): Promise<void> {
-        console.log(`test ${task}`)
         if (task.title.length === 0) return
 
         const tempTask: Task = {...task, id: Date.now()};
