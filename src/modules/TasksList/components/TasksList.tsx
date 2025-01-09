@@ -11,6 +11,7 @@ import ConfirmationModal from "../../../components/ConfirmationModal";
 import scrollToTheEndOfList from "../helpers/scrollToTheEndOfList";
 import useDelayedCallback from "../hooks/useDelayedCallback";
 import useTaskActionsMenu from "../hooks/useTaskActionsMenu";
+import useTaskEditing from "../hooks/useTaskEditing";
 
 const TasksList: FC = observer(() => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -22,7 +23,7 @@ const TasksList: FC = observer(() => {
     const delayedScrollToTheEndOfList = useDelayedCallback(()=>scrollToTheEndOfList(listRef), 100)
 
     const {activeActionsMenu, changeActiveActionsMenu} = useTaskActionsMenu()
-
+    const {editableTask, changeEditableTask} = useTaskEditing()
 
     useEffect(() => {
         const fetchTasks = async (): Promise<void> => {
@@ -72,6 +73,8 @@ const TasksList: FC = observer(() => {
                         key={task.id}
                         task={task}
                         changeActiveActionsMenu={changeActiveActionsMenu}
+                        editable={editableTask === task.id}
+                        setEditableTask={changeEditableTask}
                     />
                 ))}
             </StyledTasksList>

@@ -75,6 +75,21 @@ export class TasksService {
         }
     }
 
+    async changeTaskDescription(taskId: number, newDescription: string): Promise<void> {
+        const task = this.findTaskInStore(taskId);
+        if (!task) return;
+
+        const newTask = {...task, description: newDescription};
+        this.store.updateTask(newTask);
+
+        try {
+            await this.api.updateTask(newTask);
+        } catch (error: any) {
+            this.store.updateTask(task);
+            this.store.setError(error.message);
+        }
+    }
+
     async deleteTask(taskId: number): Promise<void> {
         const task = this.store.tasks.find((task) => task.id === taskId);
         if (!task) return;

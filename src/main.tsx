@@ -16,6 +16,7 @@ const theme: Theme= {
     },
     text: {
         primary: "#2E3838",
+        secondary: "rgb(128, 128, 128)",
     },
     states: {
         disabled: "rgb(128, 128, 128)",

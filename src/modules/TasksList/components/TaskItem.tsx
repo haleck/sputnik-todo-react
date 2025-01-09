@@ -9,9 +9,11 @@ import TaskContent from "./TaskContent";
 interface TaskItemProps {
     task: Task
     changeActiveActionsMenu: (newActiveActionsMenu: ITaskActionsMenu) => void
+    editable: boolean
+    setEditableTask: (taskId: number) => void
 }
 
-const TaskItem: FC<TaskItemProps> = ({task, changeActiveActionsMenu}) => {
+const TaskItem: FC<TaskItemProps> = ({task, changeActiveActionsMenu, editable, setEditableTask}) => {
     const [completed, setCompleted] = useState<boolean>(task.status === "completed");
 
     const switchCheckbox = (): void => {
@@ -31,15 +33,16 @@ const TaskItem: FC<TaskItemProps> = ({task, changeActiveActionsMenu}) => {
     }
 
     return (
-        <StyledTaskItem $isCompleted={completed}>
+        <StyledTaskItem>
             <Checkbox
                 checked={completed}
                 onChange={switchCheckbox}
                 style={{ marginTop: 4 }}
             />
             <TaskContent
-                completed={completed}
                 task={task}
+                editable={editable}
+                setEditableTask={setEditableTask}
             />
             <OptionsSvg
                 data-role={'actionsSvg'}
@@ -63,7 +66,7 @@ const OptionsSvg = (props) => (
     </svg>
 );
 
-const StyledTaskItem = styled.div<{ $isCompleted: boolean }>`
+const StyledTaskItem = styled.div`
   display: flex;
   padding: 5px 10px;
   margin-bottom: 10px;
@@ -86,13 +89,6 @@ const StyledTaskItem = styled.div<{ $isCompleted: boolean }>`
     cursor: pointer;
     border-radius: 10px;
   }
-
-  ${({ $isCompleted }) => $isCompleted && css`
-    & > textarea, div {
-      text-decoration: line-through;
-      color: ${props => props.theme.states.disabled};
-    }
-  `}
 `;
 
 export default TaskItem;

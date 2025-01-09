@@ -9,6 +9,7 @@ export type Theme = {
     },
     text: {
         primary: string;
+        secondary: string;
     },
     states: {
         disabled: string;
