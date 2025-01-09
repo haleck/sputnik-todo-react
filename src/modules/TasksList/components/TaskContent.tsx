@@ -74,8 +74,8 @@ const TaskContent = ({task, editable, setEditableTask}) => {
             />
         </InputBlock>
     ) : (
-        <DisplayBlock data-role={"task"} $isCompleted={task.status === "completed"}>
-            <Title onClick={handleTitleClick}>
+        <DisplayBlock data-role={"task"}>
+            <Title onClick={handleTitleClick} $isCompleted={task.status === "completed"}>
                 {getShortedText(title, 80)}
             </Title>
             <Description onClick={handleDescriptionClick}>
@@ -104,26 +104,25 @@ const DescriptionTextarea = styled(AutoResizeTextarea)`
 const DisplayBlock = styled.div`
   width: 100%;
   padding: 3px;
-
-  ${({ $isCompleted }) => $isCompleted && css`
-    & > div {
-      text-decoration: line-through;
-      color: ${props => props.theme.states.disabled};
-    }
-  `}
 `
 
 const Title = styled.div`
+  transition: all 0.35s ease;
+  
   width: 100%;
   cursor: pointer;
   white-space: pre-wrap;
   word-break: break-word;
   overflow: hidden;
+  ${({ $isCompleted }) => $isCompleted && css`
+    text-decoration: line-through;
+    color: ${props => props.theme.text.secondary};
+  `}
 `
 
 const Description = styled(Title)`
   font-size: ${props => props.theme.font.small};
-  color: ${props => props.theme.text.secondary}
+  color: ${props => props.theme.text.secondary};
 `
 
 export default TaskContent;
