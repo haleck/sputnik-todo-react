@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TasksList from "../../modules/TasksList";
-import TasksCreator from "../../components/TasksCreator.tsx";
+import TaskCreatorModal from "../../components/TaskCreatorModal.tsx";
 import styled from "styled-components";
+import Button from "../../components/Button";
 
 const MainPage = () => {
+    const [modalVisible, setModalVisible] = useState(false)
+
     return (
         <StyledWrapper>
             <StyledContent>
@@ -13,7 +16,14 @@ const MainPage = () => {
                         <path d="m640-480 80 80v80H520v240l-40 40-40-40v-240H240v-80l80-80v-280h-40v-80h400v80h-40v280Zm-286 80h252l-46-46v-314H400v314l-46 46Zm126 0Z"/>
                     </StyledSvg>
                 </StyledHeader>
-                <TasksCreator />
+                {modalVisible &&
+                    <TaskCreatorModal isVisible={modalVisible} onClose={()=>setModalVisible(false)} />
+                }
+                <ButtonWrapper>
+                    <Button $regular onClick={()=>setModalVisible(true)}>
+                        Новая задача
+                    </Button>
+                </ButtonWrapper>
                 <TasksList />
             </StyledContent>
         </StyledWrapper>
@@ -56,6 +66,12 @@ const StyledHeader = styled.div`
   color: ${props => props.theme.text.primary};
   padding-right: 20px;
 `;
+
+const ButtonWrapper = styled.div`
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 25px;
+`
 
 const StyledSvg = styled.svg`
   width: 35px;

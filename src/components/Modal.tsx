@@ -5,9 +5,10 @@ interface ModalProps {
     children: React.ReactNode;
     onClose: () => void;
     isVisible?: boolean
+    delay?: number
 }
 
-const Modal: FC<ModalProps> = ({children, onClose, isVisible}) => {
+const Modal: FC<ModalProps> = ({children, onClose, isVisible, delay}) => {
     const [closing, setClosing] = useState<boolean>(false);
 
     const handleOverlayClick = (event: React.MouseEvent): void => {
@@ -21,7 +22,7 @@ const Modal: FC<ModalProps> = ({children, onClose, isVisible}) => {
         setTimeout(() => {
             setClosing(false);
             onClose();
-        }, 300);
+        }, delay || 300);
     };
 
     useEffect(() => {
@@ -89,10 +90,10 @@ const StyledModalOverlay = styled.div<{ $closing: boolean }>`
 `;
 
 const StyledModalContent = styled.div<{ $closing: boolean }>`
-  background-color: ${props => props.theme.background.elements};
+  background-color: ${props => props.theme.background.content};
   padding: 20px;
   border-radius: 10px;
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
   text-align: center;
   animation: ${({ $closing }) => ($closing ? slideOut : slideIn)} 0.3s forwards;
