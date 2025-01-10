@@ -29,6 +29,7 @@ const theme: Theme= {
         width: "10px",
     },
     font: {
+        extraLarge: "32px",
         large: "26px",
         regular: "22px",
         small: "18px",

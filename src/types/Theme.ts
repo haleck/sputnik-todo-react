@@ -22,6 +22,7 @@ export type Theme = {
         width: string;
     },
     font: {
+        extraLarge: string;
         large: string;
         regular: string;
         small: string;
