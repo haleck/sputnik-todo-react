@@ -1,26 +1,20 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import TaskItem from "./TaskItem.tsx";
 import {observer} from "mobx-react-lite";
-import {reaction} from "mobx";
 import taskService, {tasksStore} from "../../../services/TaskService";
 import Error from "../../../UI/Error";
 import Loader from "../../../UI/Loader";
 import styled from "styled-components";
 import TaskActionsMenu from "./TaskActionsMenu";
 import ConfirmationModal from "../../../components/ConfirmationModal";
-import scrollToTheEndOfList from "../helpers/scrollToTheEndOfList";
-import useDelayedCallback from "../hooks/useDelayedCallback";
 import useTaskActionsMenu from "../hooks/useTaskActionsMenu";
 import useTaskEditing from "../hooks/useTaskEditing";
 
 const TasksList: FC = observer(() => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [showConfirmationModal, setShowConfirmationModal] = useState<boolean>(false);
-    const [prevTasksArrLen, setPrevTasksArrLen] = useState<number>(0)
 
     const listRef = useRef<HTMLDivElement | null>(null);
-
-    const delayedScrollToTheEndOfList = useDelayedCallback(()=>scrollToTheEndOfList(listRef), 100)
 
     const {activeActionsMenu, changeActiveActionsMenu} = useTaskActionsMenu()
     const {editableTask, changeEditableTask} = useTaskEditing()
@@ -35,24 +29,6 @@ const TasksList: FC = observer(() => {
         }
 
         fetchTasks()
-
-        const disposer = reaction(
-            () => tasksStore.tasks.length,
-            () => {
-                const currentTasksArrLen = tasksStore.tasks.length;
-
-                setPrevTasksArrLen((prevLen) => {
-                    if (prevLen < currentTasksArrLen) {
-                        delayedScrollToTheEndOfList();
-                    }
-                    return currentTasksArrLen;
-                });
-            }
-        );
-
-        return () => {
-            disposer();
-        };
     }, []);
 
     const deleteTask = (taskId): void => {

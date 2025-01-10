@@ -15,7 +15,7 @@ export default class TasksStore {
     }
 
     addTask(task: Task): void {
-        this.tasks.push(task);
+        this.tasks.unshift(task);
     }
 
     updateTask(task: Task): void {
