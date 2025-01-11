@@ -10,7 +10,7 @@ import ConfirmationModal from "../../../components/ConfirmationModal";
 import useTaskActionsMenu from "../hooks/useTaskActionsMenu";
 import useTaskEditing from "../hooks/useTaskEditing";
 
-const TasksList: FC = observer(() => {
+const TasksList: FC = observer(({tasks}) => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [showConfirmationModal, setShowConfirmationModal] = useState<boolean>(false);
 
@@ -44,7 +44,7 @@ const TasksList: FC = observer(() => {
     return (
         <>
             <StyledTasksList ref={listRef}>
-                {tasksStore.tasks.map((task) => (
+                {tasks.map((task) => (
                     <TaskItem
                         key={task.id}
                         task={task}
