@@ -5,7 +5,7 @@ import useDelayedCallback from "../hooks/useDelayedCallback";
 import styled, {css} from "styled-components";
 import {getShortedText} from "../helpers/getShortedText";
 
-const TaskContent = ({task, editable, setEditableTask}) => {
+const TaskContent = ({task, editable, setEditableTask, isCompleted}) => {
     const [title, setTitle] = useState<string>(task.title);
     const [description, setDescription] = useState<string>(task.description)
 
@@ -75,7 +75,7 @@ const TaskContent = ({task, editable, setEditableTask}) => {
         </InputBlock>
     ) : (
         <DisplayBlock data-role={"task"}>
-            <Title onClick={handleTitleClick} $isCompleted={task.status === "completed"}>
+            <Title onClick={handleTitleClick} $isCompleted={isCompleted}>
                 {getShortedText(title, 80)}
             </Title>
             <Description onClick={handleDescriptionClick}>

@@ -19,6 +19,8 @@ const TasksList: FC = observer(() => {
     const {activeActionsMenu, changeActiveActionsMenu} = useTaskActionsMenu()
     const {editableTask, changeEditableTask} = useTaskEditing()
 
+    const [removingTask, setRemovingTask] = useState<number | null>(null);
+
     useEffect(() => {
         const fetchTasks = async (): Promise<void> => {
             setIsLoading(true)
@@ -32,9 +34,13 @@ const TasksList: FC = observer(() => {
     }, []);
 
     const deleteTask = (taskId): void => {
+        setRemovingTask(taskId);
         setShowConfirmationModal(false);
         changeActiveActionsMenu({task: null, position: null});
-        taskService.deleteTask(taskId);
+        setTimeout(() => {
+            taskService.deleteTask(taskId);
+            setRemovingTask(null);
+        }, 300);
     };
 
     if (isLoading) return <Loader title="Получение списка задач..."/>;
@@ -44,13 +50,14 @@ const TasksList: FC = observer(() => {
     return (
         <>
             <StyledTasksList ref={listRef}>
-                {tasksStore.filteredTasks.map((task) => (
+                {tasksStore.filteredTasks.map((task, index) => (
                     <TaskItem
                         key={task.id}
                         task={task}
                         changeActiveActionsMenu={changeActiveActionsMenu}
                         editable={editableTask === task.id}
                         setEditableTask={changeEditableTask}
+                        isRemoving={removingTask === task.id}
                     />
                 ))}
             </StyledTasksList>

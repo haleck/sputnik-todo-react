@@ -1,8 +1,8 @@
 import React, {FC, useState} from 'react';
 import Checkbox from "../../../UI/Checkbox";
 import {Task} from "../../../types/Task";
-import taskService from "../../../services/TaskService";
-import styled, {css} from "styled-components";
+import taskService, {tasksStore} from "../../../services/TaskService";
+import styled, {keyframes} from "styled-components";
 import {ITaskActionsMenu} from "../types/ActionsMenu";
 import TaskContent from "./TaskContent";
 
@@ -11,14 +11,37 @@ interface TaskItemProps {
     changeActiveActionsMenu: (newActiveActionsMenu: ITaskActionsMenu) => void
     editable: boolean
     setEditableTask: (taskId: number) => void
+    isRemoving?: boolean
+    index?: number
 }
 
-const TaskItem: FC<TaskItemProps> = ({task, changeActiveActionsMenu, editable, setEditableTask}) => {
+const TaskItem: FC<TaskItemProps> = ({
+        task,
+        changeActiveActionsMenu,
+        editable,
+        setEditableTask,
+        isRemoving,
+        index
+    }) => {
     const [completed, setCompleted] = useState<boolean>(task.status === "completed");
+    const [willBeFiltered, setWillBeFiltered] = useState(false)
 
     const switchCheckbox = (): void => {
-        taskService.switchTaskCompleted(task.id);
+        if (tasksStore.filter === "done" && completed ||
+            tasksStore.filter === "inProgress" && !completed)
+        {
+            setWillBeFiltered(true)
+            setCompleted(!completed);
+            setTimeout(()=>{
+                taskService.switchTaskCompleted(task.id);
+            }, 500)
+            return
+        }
+
         setCompleted(!completed);
+        setTimeout(()=>{
+            taskService.switchTaskCompleted(task.id);
+        }, 150)
     };
 
     const handleOptionsClick = (event: React.MouseEvent): void => {
@@ -33,7 +56,7 @@ const TaskItem: FC<TaskItemProps> = ({task, changeActiveActionsMenu, editable, s
     }
 
     return (
-        <StyledTaskItem>
+        <StyledTaskItem $isRemoving={isRemoving || willBeFiltered} $index={index}>
             <Checkbox
                 checked={completed}
                 onChange={switchCheckbox}
@@ -43,6 +66,7 @@ const TaskItem: FC<TaskItemProps> = ({task, changeActiveActionsMenu, editable, s
                 task={task}
                 editable={editable}
                 setEditableTask={setEditableTask}
+                isCompleted={completed}
             />
             <OptionsSvg
                 data-role={'actionsSvg'}
@@ -66,12 +90,21 @@ const OptionsSvg = (props) => (
     </svg>
 );
 
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
 const StyledTaskItem = styled.div`
   display: flex;
   padding: 5px 10px;
   margin-bottom: 10px;
   gap: 5px;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, opacity 2s ease;
   background-color: ${props => props.theme.background.elements};
   border-radius: 10px;
   position: relative;
@@ -89,6 +122,8 @@ const StyledTaskItem = styled.div`
     cursor: pointer;
     border-radius: 10px;
   }
-`;
+
+  animation: ${({ $isRemoving }) => ($isRemoving && fadeOut)} 0.5s forwards;
+`
 
 export default TaskItem;
