@@ -5,20 +5,14 @@ import styled from "styled-components";
 import Button from "../../UI/Button";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../UI/Header";
-import {tasksStore} from "../../services/TaskService";
-import {observer} from "mobx-react-lite";
-import useFilteredTasks from "./hooks/useFilteredTasks";
 
-const MainPage = observer(() => {
+const MainPage = () => {
     const [modalVisible, setModalVisible] = useState<boolean>(false)
-
-    const [filter, setFilter] = useState<string>("all");
-    const filteredTasks = useFilteredTasks(tasksStore.tasks, filter);
 
     return (
         <Wrapper>
             <Container>
-                <Sidebar filter={filter} setFilter={setFilter}/>
+                <Sidebar />
                 <Content>
                     <StyledHeader>
                         ToDo App
@@ -32,12 +26,12 @@ const MainPage = observer(() => {
                             Новая задача
                         </Button>
                     </ButtonWrapper>
-                    <TasksList tasks={filteredTasks}/>
+                    <TasksList />
                 </Content>
             </Container>
         </Wrapper>
     );
-});
+};
 
 const Wrapper = styled.div`
   width: 100vw;

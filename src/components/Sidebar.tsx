@@ -2,8 +2,9 @@ import React from 'react';
 import styled, {css} from "styled-components";
 import Header from "../UI/Header";
 import StarIcon from "../UI/StarIcon";
+import {tasksStore} from "../services/TaskService";
 
-const Sidebar = ({filter, setFilter}) => {
+const Sidebar = () => {
     return (
         <Wrapper>
             <StyledHeader>
@@ -11,19 +12,19 @@ const Sidebar = ({filter, setFilter}) => {
                 <FilterSvg />
             </StyledHeader>
             <List>
-                <ListItem $selected={filter==="all"} onClick={()=>setFilter("all")}>
+                <ListItem $selected={tasksStore.filter==="all"} onClick={()=>tasksStore.setFilter("all")}>
                     <AllSvg />
                     Все задачи
                 </ListItem>
-                <ListItem $selected={filter==="favorite"} onClick={()=>setFilter("favorite")}>
+                <ListItem $selected={tasksStore.filter==="favorite"} onClick={()=>tasksStore.setFilter("favorite")}>
                     <StarSvg />
                     Избранное
                 </ListItem>
-                <ListItem $selected={filter==="done"} onClick={()=>setFilter("done")}>
+                <ListItem $selected={tasksStore.filter==="done"} onClick={()=>tasksStore.setFilter("done")}>
                     <DoneSvg />
                     Завершенные
                 </ListItem>
-                <ListItem $selected={filter==="inProgress"} onClick={()=>setFilter("inProgress")}>
+                <ListItem $selected={tasksStore.filter==="inProgress"} onClick={()=>tasksStore.setFilter("inProgress")}>
                     <WaitingSvg />
                     В процессе
                 </ListItem>
