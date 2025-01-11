@@ -3,8 +3,9 @@ import styled, {css} from "styled-components";
 import Header from "../UI/Header";
 import StarIcon from "../UI/StarIcon";
 import {tasksStore} from "../services/TaskService";
+import {observer} from "mobx-react-lite";
 
-const Sidebar = () => {
+const Sidebar = observer(() => {
     return (
         <Wrapper>
             <StyledHeader>
@@ -31,7 +32,7 @@ const Sidebar = () => {
             </List>
         </Wrapper>
     );
-};
+});
 
 const Wrapper = styled.div`
   margin-top: 2.5dvh;
@@ -70,6 +71,7 @@ const List = styled.ul`
 `
 
 const ListItem = styled.li`
+  margin-bottom: 3px;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
