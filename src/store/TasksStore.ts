@@ -6,6 +6,8 @@ export default class TasksStore {
     maxTaskTitleLength: number = 300;
     error: string | null = null;
     filter: string = "all";
+    sortField: string = "createdAt";
+    sortOrder: "asc" | "desc" = "asc";
 
     constructor() {
         makeAutoObservable(this, {
@@ -41,15 +43,51 @@ export default class TasksStore {
         this.error = message;
     }
 
+    setSortField(field: "createdAt" | "updatedAt" | "title"): void {
+        this.sortField = field;
+    }
+
+    setSortOrder(order: "asc" | "desc"): void {
+        this.sortOrder = order;
+    }
+
+    sortTasks(tasks: Task[]): Task[] {
+        return tasks.slice().sort((a, b) => {
+            let comparison = 0;
+
+            if (this.sortField === "createdAt" || this.sortField === "updatedAt") {
+                const dateA = new Date(a[this.sortField]);
+                const dateB = new Date(b[this.sortField]);
+
+                comparison = dateA.getTime() - dateB.getTime();
+            } else if (this.sortField === "title") {
+                comparison = a.title.localeCompare(b.title);
+            }
+
+            if (this.sortOrder === "desc") {
+                comparison = -comparison;
+            }
+
+            return comparison;
+        });
+    }
+
     get filteredTasks(): Task[] {
+        let tasks = this.tasks;
+
         switch (this.filter) {
             case "done":
-                return this.tasks.filter((task) => task.status === "completed");
+                tasks = tasks.filter((task) => task.status === "completed");
+                break;
             case "inProgress":
-                return this.tasks.filter((task) => task.status !== "completed");
+                tasks = tasks.filter((task) => task.status !== "completed");
+                break;
             case "all":
             default:
-                return this.tasks;
+                break;
         }
+
+        return this.sortTasks(tasks);
     }
 }
+

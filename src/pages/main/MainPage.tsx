@@ -3,7 +3,7 @@ import TasksList from "../../modules/TasksList";
 import TaskCreatorModal from "../../components/TaskCreatorModal.tsx";
 import styled from "styled-components";
 import Button from "../../UI/Button";
-import Sidebar from "../../components/Sidebar";
+import SidebarTools from "../../components/SidebarTools";
 import Header from "../../UI/Header";
 
 const MainPage = () => {
@@ -12,7 +12,7 @@ const MainPage = () => {
     return (
         <Wrapper>
             <Container>
-                <Sidebar />
+                <SidebarTools />
                 <Content>
                     <StyledHeader>
                         ToDo App

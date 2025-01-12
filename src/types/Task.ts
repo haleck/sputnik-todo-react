@@ -3,4 +3,6 @@ export interface Task {
     title: string;
     description: string;
     status: string;
+    createdAt: string;
+    updatedAt: string;
 }
