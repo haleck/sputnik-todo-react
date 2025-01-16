@@ -75,6 +75,7 @@ export class TasksService {
         const dateNow = new Date()
 
         if (!task) return;
+        if (task.title === newTitle) return;
 
         const newTask = {...task, title: newTitle};
         this.store.updateTask({...newTask, updatedAt: dateNow.toISOString()});
@@ -92,6 +93,7 @@ export class TasksService {
         const dateNow = new Date()
 
         if (!task) return;
+        if (task.description === newDescription) return;
 
         const newTask = {...task, description: newDescription};
         this.store.updateTask({...newTask, updatedAt: dateNow.toISOString()});
