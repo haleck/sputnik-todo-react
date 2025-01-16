@@ -41,7 +41,7 @@ const TaskItem: FC<TaskItemProps> = ({
         setCompleted(!completed);
         setTimeout(()=>{
             taskService.switchTaskCompleted(task.id);
-        }, 150)
+        }, 300)
     };
 
     const handleOptionsClick = (event: React.MouseEvent): void => {
