@@ -7,7 +7,7 @@ export default class TasksStore {
     error: string | null = null;
     filter: string = "all";
     sortField: string = "createdAt";
-    sortOrder: "asc" | "desc" = "asc";
+    sortOrder: "asc" | "desc" = "desc";
 
     constructor() {
         makeAutoObservable(this, {
@@ -30,7 +30,7 @@ export default class TasksStore {
         }
     }
 
-    deleteTask(taskId: number): void {
+    deleteTask(taskId: number | string): void {
         this.tasks = this.tasks.filter((task) => task.id !== taskId);
     }
 

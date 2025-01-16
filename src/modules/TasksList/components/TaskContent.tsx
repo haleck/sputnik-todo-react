@@ -31,13 +31,13 @@ const TaskContent = ({task, editable, setEditableTask, isCompleted}) => {
         focus(descriptionTextareaRef)
     }, 100)
 
-    const changeTaskTitle = (): void => {
+    const changeTaskTitle = useDelayedCallback(()=>{
         taskService.changeTaskTitle(task.id, title);
-    };
+    }, 300)
 
-    const changeTaskDescription = (): void => {
+    const changeTaskDescription = useDelayedCallback(()=>{
         taskService.changeTaskDescription(task.id, description);
-    };
+    }, 300)
 
     const handleTitleClick = (): void => {
         if (!editable) {

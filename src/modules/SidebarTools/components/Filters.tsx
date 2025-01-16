@@ -1,18 +1,18 @@
 import React from 'react';
 import Sidebar from "./Sidebar";
-import FilterSvg from "./icons/FilterSvg";
+import FilterSvg from "../UI/icons/FilterSvg";
 import {Option} from "./SidebarOptions";
-import AllSvg from "./icons/AllSvg";
-import StarSvg from "./icons/StarSvg";
-import DoneSvg from "./icons/DoneSvg";
-import WaitingSvg from "./icons/WaitingSvg";
-import {TaskFilters} from "./types/Filters";
-import {tasksStore} from "../services/TaskService";
+import AllSvg from "../UI/icons/AllSvg";
+import StarSvg from "../UI/icons/StarSvg";
+import DoneSvg from "../UI/icons/DoneSvg";
+import WaitingSvg from "../UI/icons/WaitingSvg";
+import {TaskFilters} from "../types/Filters";
+import {tasksStore} from "../../../services/TaskService";
 import {observer} from "mobx-react-lite";
 
 const filtersList: Option[] = [
     { id: TaskFilters.All, label: "Все задачи", icon: <AllSvg /> },
-    { id: TaskFilters.Favorite, label: "Избранное", icon: <StarSvg /> },
+    // { id: TaskFilters.Favorite, label: "Избранное", icon: <StarSvg /> },
     { id: TaskFilters.Done, label: "Завершенные", icon: <DoneSvg /> },
     { id: TaskFilters.InProgress, label: "В процессе", icon: <WaitingSvg /> },
 ];

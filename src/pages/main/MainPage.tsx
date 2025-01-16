@@ -3,7 +3,7 @@ import TasksList from "../../modules/TasksList";
 import TaskCreatorModal from "../../components/TaskCreatorModal.tsx";
 import styled from "styled-components";
 import Button from "../../UI/Button";
-import SidebarTools from "../../components/SidebarTools";
+import SidebarTools from "../../modules/SidebarTools";
 import Header from "../../UI/Header";
 
 const MainPage = () => {

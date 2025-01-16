@@ -1,4 +1,4 @@
-import TasksApi from "../api/TasksApi";
+import TasksApi from "../api/MockApi";
 import TasksStore from "../store/TasksStore";
 import {Task} from "../types/Task";
 
@@ -29,16 +29,23 @@ export class TasksService {
     }
 
     async addTask(task: Omit<Task, "id">): Promise<void> {
+        const dateNow = new Date()
+
         if (task.title.length === 0) return
 
-        const tempTask: Task = {...task, id: Date.now()};
+        const tempTask: Task = {
+            ...task,
+            id: dateNow.toString(),
+            createdAt: dateNow.toISOString(),
+            updatedAt: dateNow.toISOString()
+        };
         this.store.addTask(tempTask);
 
         try {
             const response = await this.api.addTask(task);
 
             this.store.deleteTask(tempTask.id)
-            this.store.addTask({...tempTask, id: response.data.data.id});
+            this.store.addTask({id: response.data.data.id, ...response.data.data.attributes});
         } catch (error: any) {
             this.store.deleteTask(tempTask.id);
             this.store.setError(error.message);
@@ -47,10 +54,13 @@ export class TasksService {
 
     async switchTaskCompleted(taskId: number): Promise<void> {
         const task = this.findTaskInStore(taskId);
+        const dateNow = new Date();
+
         if (!task) return;
 
         const newTask = {...task, status: task.status === "completed" ? "not completed" : "completed"};
-        this.store.updateTask(newTask);
+
+        this.store.updateTask({...newTask, updatedAt: dateNow.toISOString()});
 
         try {
             await this.api.updateTask(newTask);
@@ -62,10 +72,12 @@ export class TasksService {
 
     async changeTaskTitle(taskId: number, newTitle: string): Promise<void> {
         const task = this.findTaskInStore(taskId);
+        const dateNow = new Date()
+
         if (!task) return;
 
         const newTask = {...task, title: newTitle};
-        this.store.updateTask(newTask);
+        this.store.updateTask({...newTask, updatedAt: dateNow.toISOString()});
 
         try {
             await this.api.updateTask(newTask);
@@ -77,10 +89,12 @@ export class TasksService {
 
     async changeTaskDescription(taskId: number, newDescription: string): Promise<void> {
         const task = this.findTaskInStore(taskId);
+        const dateNow = new Date()
+
         if (!task) return;
 
         const newTask = {...task, description: newDescription};
-        this.store.updateTask(newTask);
+        this.store.updateTask({...newTask, updatedAt: dateNow.toISOString()});
 
         try {
             await this.api.updateTask(newTask);

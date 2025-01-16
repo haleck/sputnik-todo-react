@@ -30,7 +30,7 @@ export default class TasksApi {
                 page: 0,
                 pageSize: 3000
             },
-            fields: ["title", "description", "status"]
+            fields: ["title", "description", "status", "createdAt", "updatedAt"]
         }
 
         return axios.get<TaskListResponse>(this._apiUrl, { params: params });

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import StarIcon from "../../UI/StarIcon";
+import StarIcon from "../../../../UI/StarIcon";
 
 const StarSvg = styled(StarIcon)`
   width: 20px;

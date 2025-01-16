@@ -1,5 +1,5 @@
 import React from 'react';
-import Svg from "../UI/Svg";
+import Svg from "../Svg";
 
 const SortSvg = () => {
     return (
