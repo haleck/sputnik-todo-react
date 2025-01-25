@@ -1,5 +1,5 @@
 import React, {FC, ReactNode} from 'react';
-import Header from "../../../UI/Header";
+import Header from "@ui/Header";
 import styled from "styled-components";
 
 interface SidebarHeaderProps {

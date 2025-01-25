@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
-import Checkbox from "../../../UI/Checkbox";
-import {Task} from "../../../types/Task";
-import taskService, {tasksStore} from "../../../services/TaskService";
+import Checkbox from "@ui/Checkbox";
+import {Task} from "@types/Task";
+import taskService, {tasksStore} from "@services/TaskService";
 import styled, {keyframes} from "styled-components";
 import {ITaskActionsMenu} from "../types/ActionsMenu";
 import TaskContent from "./TaskContent";

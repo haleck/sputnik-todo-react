@@ -1,5 +1,5 @@
 import { makeAutoObservable, computed } from "mobx";
-import { Task } from "../types/Task";
+import { Task } from "@types/Task";
 
 export default class TasksStore {
     tasks: Task[] = [];

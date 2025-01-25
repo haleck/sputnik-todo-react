@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from "./Sidebar";
 import {Option} from "./SidebarOptions";
 import {Sort} from "../types/Sort";
-import {tasksStore} from "../../../services/TaskService";
+import {tasksStore} from "@services/TaskService";
 import SortSvg from "../UI/icons/SortSvg";
 import {observer} from "mobx-react-lite";
 

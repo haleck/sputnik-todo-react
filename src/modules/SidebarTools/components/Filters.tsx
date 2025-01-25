@@ -7,7 +7,7 @@ import StarSvg from "../UI/icons/StarSvg";
 import DoneSvg from "../UI/icons/DoneSvg";
 import WaitingSvg from "../UI/icons/WaitingSvg";
 import {TaskFilters} from "../types/Filters";
-import {tasksStore} from "../../../services/TaskService";
+import {tasksStore} from "@services/TaskService";
 import {observer} from "mobx-react-lite";
 
 const filtersList: Option[] = [

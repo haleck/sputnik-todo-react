@@ -1,9 +1,9 @@
 import React, {FC, useState} from 'react';
-import AutoResizeTextarea from "../UI/AutoResizeTextarea";
-import taskService, {tasksStore} from "../services/TaskService";
+import AutoResizeTextarea from "@ui/AutoResizeTextarea";
+import taskService, {tasksStore} from "@services/TaskService";
 import styled, {css} from "styled-components";
-import Button from "../UI/Button";
-import Modal from "../UI/Modal";
+import Button from "@ui/Button";
+import Modal from "@ui/Modal";
 
 const TaskCreatorModal: FC = ({onClose}) => {
     const [title, setTitle] = useState<string>('');

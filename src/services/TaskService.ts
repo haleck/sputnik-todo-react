@@ -1,6 +1,6 @@
-import TasksApi from "../api/MockApi";
-import TasksStore from "../store/TasksStore";
-import {Task} from "../types/Task";
+import TasksApi from "@api/MockApi";
+import TasksStore from "@store/TasksStore";
+import {Task} from "@types/Task";
 
 export class TasksService {
     private api: TasksApi;

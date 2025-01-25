@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from "./Sidebar";
 import {Option} from "./SidebarOptions";
-import {tasksStore} from "../../../services/TaskService";
+import {tasksStore} from "@services/TaskService";
 import {Order} from "../types/Order";
 import {observer} from "mobx-react-lite";
 

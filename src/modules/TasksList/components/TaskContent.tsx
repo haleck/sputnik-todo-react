@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
-import AutoResizeTextarea from "../../../UI/AutoResizeTextarea";
-import taskService, {tasksStore} from "../../../services/TaskService";
+import AutoResizeTextarea from "@ui/AutoResizeTextarea";
+import taskService, {tasksStore} from "@services/TaskService";
 import useDelayedCallback from "../hooks/useDelayedCallback";
 import styled, {css} from "styled-components";
 import {getShortedText} from "../helpers/getShortedText";

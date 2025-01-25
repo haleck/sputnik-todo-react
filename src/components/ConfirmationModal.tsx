@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import Modal from '../UI/Modal';
+import Modal from '@ui/Modal';
 import styled from 'styled-components';
 
 interface ConfirmationModalProps {

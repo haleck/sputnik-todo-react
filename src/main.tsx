@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client'
 import App from './App.tsx'
 import GlobalStyles from "./GlobalStyles.ts";
 import {ThemeProvider} from "styled-components";
-import {Theme} from "./types/Theme";
+import {Theme} from "@types/Theme";
 
 const theme: Theme= {
     primary: {

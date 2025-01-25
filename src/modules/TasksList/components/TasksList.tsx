@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import TaskItem from "./TaskItem.tsx";
 import {observer} from "mobx-react-lite";
-import taskService, {tasksStore} from "../../../services/TaskService";
-import Error from "../../../UI/Error";
-import Loader from "../../../UI/Loader";
+import taskService, {tasksStore} from "@services/TaskService";
+import Error from "@ui/Error";
+import Loader from "@ui/Loader";
 import styled from "styled-components";
 import TaskActionsMenu from "./TaskActionsMenu";
-import ConfirmationModal from "../../../components/ConfirmationModal";
+import ConfirmationModal from "@components//ConfirmationModal";
 import useTaskActionsMenu from "../hooks/useTaskActionsMenu";
 import useTaskEditing from "../hooks/useTaskEditing";
 
