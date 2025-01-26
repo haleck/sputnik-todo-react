@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import TasksList from "@modules/TasksList";
 import TaskCreatorModal from "@components/TaskCreatorModal.tsx";
 import styled from "styled-components";
-import Button from "@ui/Button";
+import Button from "@ui/Button.tsx";
 import SidebarTools from "@modules/SidebarTools";
-import Header from "@ui/Header";
+import Header from "@ui/Header.tsx";
 
 const MainPage = () => {
     const [modalVisible, setModalVisible] = useState<boolean>(false)
