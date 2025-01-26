@@ -5,6 +5,7 @@ import path from 'path';
 import Inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
+  base: "/sputnik-todo-react/",
   plugins: [react(),
     svgr({
       // svgr options: https://react-svgr.com/docs/options/
