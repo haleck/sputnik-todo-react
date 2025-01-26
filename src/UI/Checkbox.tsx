@@ -49,7 +49,7 @@ const CustomCheckbox = styled.span`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background-image: url("/src/assets/svg/check.svg");
+    background-image: url("check.svg");
     background-size: cover;
     transition: all 0.2s ease;
   }
